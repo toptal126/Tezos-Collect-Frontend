@@ -217,6 +217,10 @@ body {
     height: 1.5rem;
   }
 
+  .backdrop-blur-12px {
+    backdrop-filter: blur(12px);
+  }
+
   .input-light {
     @apply bg-white placeholder-grayText text-componentBg;
   }

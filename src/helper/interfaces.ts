@@ -133,6 +133,10 @@ type TYPE_MARKET_ADVANCED_FILTER_VALUE =
 
 interface I_DOMAIN_SEARCH_VALUE {
   domainListed?: boolean;
+  isRegistered?: boolean;
+  isExpiring?: boolean; // isExpiring or isExpired
+  isForAuction?: boolean;
+  isForSale?: boolean;
   showType?:
     | "SHOW_ALL"
     | "SHOW_REGISTERED"
@@ -147,6 +151,7 @@ interface I_DOMAIN_SEARCH_VALUE {
   minPrice?: number;
   maxPrice?: number;
   contains?: string;
+  owner?: string;
 }
 
 interface I_DOMAIN_ACTIVITY_SEARCH_OPTION {
@@ -163,6 +168,14 @@ type TYPE_ACTIVITY_SORT_VALUE =
   | "AMOUNT_DESC"
   | "TIMESTAMP_ASC"
   | "TIMESTAMP_DESC";
+
+interface I_PROFILE {
+  reversedName?: string;
+  avatarLink: string;
+  address: string;
+  totalVolume: number;
+  holding: number;
+}
 
 export const initializeDomainActivity = (): I_DOMAIN_ACTIVITY => {
   return {
@@ -231,7 +244,15 @@ type TYPE_MARKET_SORT_VALUE =
   | "TOKENID_ASC"
   | "TOKENID_DESC"
   | "EXPIRESAT_ASC"
-  | "EXPIRESAT_DESC";
+  | "EXPIRESAT_DESC"
+  | "SALESTARTEDAT_ASC"
+  | "SALESTARTEDAT_DESC"
+  | "SALEENDSAT_ASC"
+  | "SALEENDSAT_DESC"
+  | "AUCTIONSTARTEDAT_ASC"
+  | "AUCTIONSTARTEDAT_DESC"
+  | "AUCTIONENDSAT_ASC"
+  | "AUCTIONENDSAT_DESC";
 
 export type {
   TYPE_COLLECTION,
@@ -248,4 +269,5 @@ export type {
   TYPE_MARKET_ADVANCED_FILTER_VALUE,
   I_DOMAIN_ACTIVITY_SEARCH_OPTION,
   TYPE_ACTIVITY_SORT_VALUE,
+  I_PROFILE,
 };

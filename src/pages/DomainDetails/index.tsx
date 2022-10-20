@@ -5,7 +5,7 @@ import tezosCollectLogo from "assets/images/tezos-collect-logo.svg";
 
 import ComponentTable from "components/UI/ComponentTable";
 import PriceHistory from "components/PriceHistory";
-import DomainCard from "components/DomainCard";
+
 import { useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -16,11 +16,13 @@ import {
 } from "helper/interfaces";
 import { useTezosCollectStore } from "store";
 import { beautifyAddress, dateDifFromNow } from "helper/formatters";
+import DomainMarketCard from "components/DomainMarketCard";
 
 const DomainDetails = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const { domain: domainName } = useParams<{ domain: string }>();
   const {
+    topSaleDomains,
     setMakeOfferModal,
     setOpenAuctionModal,
     setListForSaleModal,
@@ -38,6 +40,9 @@ const DomainDetails = () => {
     setPlaceBidModal,
 
     claimWinnedAuction,
+
+    bookmarkedNames,
+    toggleBookmark,
     getDomainActivityByName,
   } = useTezosCollectStore();
 
@@ -85,7 +90,7 @@ const DomainDetails = () => {
       fetchOnChainDomainDataByName(domainName),
       findDomainByName(domainName || ""),
     ]);
-    console.log(_cachedDomain);
+    // console.log(_cachedDomain);
     const _domain: TYPE_DOMAIN = {
       ..._onChainDomain,
       ..._cachedDomain,
@@ -107,7 +112,7 @@ const DomainDetails = () => {
       topBidder: _onChainDomain.topBidder,
       ownerChanged: _onChainDomain.ownerChanged,
     };
-    console.log(_domain);
+    // console.log(_domain);
 
     setLoading(false);
     setDomain(_domain);
@@ -149,13 +154,14 @@ const DomainDetails = () => {
       updateDomain();
     }
   };
-  const onSellForOffer = async (_offerer: string) => {
+  const onSellForOffer = async (_offerer: string, _amount: number) => {
     if (loading === true) return;
     console.log("_offerer", _offerer);
     if ((domain?.tokenId || -1) > 0) {
       await sellOfferForOffer(
         domain?.tokenId || -1,
         _offerer,
+        _amount / 10 ** 6,
         domain?.includingOperator || false
       );
       updateDomain();
@@ -280,7 +286,7 @@ const DomainDetails = () => {
           ) : isYourDomain ? (
             <button
               className="mx-auto tezSecGr-button size-sm px-2 py-1"
-              onClick={() => onSellForOffer(offer.offerer)}
+              onClick={() => onSellForOffer(offer.offerer, offer.offer_amount)}
             >
               Sell
             </button>
@@ -344,13 +350,6 @@ const DomainDetails = () => {
     };
   }, [domainActivity]);
 
-  const relatedDomains = [
-    { name: "5471", price: 27.86, bookmarked: true },
-    { name: "5480", price: 40.86, bookmarked: false },
-    { name: "1358", price: 96.1, bookmarked: false },
-    { name: "axis", price: 107.56, bookmarked: true },
-  ];
-
   const topBidInfo = () => {
     return (
       <div className="flex flex-col font-semibold">
@@ -388,7 +387,14 @@ const DomainDetails = () => {
               onClick={updateDomain}
             />
             <HiMenu className="size-1 md:size-3 hover:text-tezGrSt cursor-pointer duration-50" />
-            <AiFillHeart className="size-1 md:size-3 hover:text-tezGrSt cursor-pointer duration-50" />
+            <AiFillHeart
+              onClick={() => toggleBookmark(domain?.name || "")}
+              className={`size-1 md:size-3 hover:text-tezGrSt cursor-pointer duration-50 ${
+                bookmarkedNames.includes(domain?.name || "")
+                  ? "text-tezGrSt"
+                  : "text-tezText"
+              }`}
+            />
           </div>
         </div>
         <div className="flex flex-col md:flex-row p-6">
@@ -557,7 +563,10 @@ const DomainDetails = () => {
                       {domain?.topOffer.toFixed(2)} ꜩ
                     </div>
                   )}
-                  {!domain.isForAuction &&
+
+                  {(!domain.isForAuction ||
+                    (domain.auctionEndsAt < new Date() &&
+                      domain.topBid === 0)) &&
                     !domain.isForSale &&
                     (domain?.offers?.find(
                       (item) => item.offerer === activeAddress
@@ -618,11 +627,11 @@ const DomainDetails = () => {
       <PriceHistory heading="Price History" collapsible={true} />
       <div className="flex flex-col gap-4 mb-8">
         <h4 className="font-playfair font-medium">See Also</h4>
-        <div className="flex gap-6">
-          {relatedDomains.map((domain, index) => {
+        <div className="grid grid-cols-5 gap-6">
+          {topSaleDomains[0].map((domain, index) => {
             return (
               <div key={index} className="flex-1">
-                <DomainCard {...domain} />
+                <DomainMarketCard domain={domain} cardHandler={() => {}} />
               </div>
             );
           })}

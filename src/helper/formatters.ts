@@ -42,9 +42,24 @@ export const dateDifFromNow = (_date: Date | string): string => {
     result = `${(difSeconds / 87600).toFixed(0)} days`;
   else if (difSeconds < 60 * 60 * 24 * 30)
     result = `${(difSeconds / (60 * 60 * 24 * 7)).toFixed(0)} weeks`;
-  else result = `${(difSeconds / (60 * 60 * 24 * 30)).toFixed(0)} months`;
+  else if (difSeconds < 60 * 60 * 24 * 30 * 12)
+    result = `${(difSeconds / (60 * 60 * 24 * 30)).toFixed(0)} months`;
+  else result = `${(difSeconds / (60 * 60 * 24 * 30 * 12)).toFixed(0)} years`;
 
   return new Date().getTime() - date.getTime() > 0
     ? `${result} ago`
     : `in ${result}`;
+};
+
+export const timerDifFromNow = (_date: Date | string): string => {
+  let date: Date = new Date();
+  if (typeof _date === "object") date = _date;
+  else date = new Date(_date);
+  const difSeconds = Math.abs(new Date().getTime() - date.getTime()) / 1000;
+  const dayStr = (difSeconds / (3600 * 24)).toFixed(0);
+  const hourStr = ((difSeconds % (3600 * 24)) / 3600).toFixed(0);
+  const minStr = ((difSeconds % 3600) / 60).toFixed(0);
+  const secStr = (difSeconds % 60).toFixed(0);
+
+  return `${dayStr}d  ${hourStr} : ${minStr} : ${secStr}`;
 };

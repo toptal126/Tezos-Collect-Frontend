@@ -8,7 +8,7 @@ import {
 
 // Set the network (Mainnet is default)
 export const TEZOS_COLLECT_NETWORK: Network = {
-  type: NetworkType.GHOSTNET,
+  type: NetworkType.MAINNET,
 };
 
 export const NFT_STORAGE_KEY =
@@ -16,7 +16,7 @@ export const NFT_STORAGE_KEY =
 
 export const TEZOS_COLLECT_SECRET = "TEZOS_COLLECT_SECRET";
 
-const MAINNET_RPC_URL: string = "https://rpc.tzkt.io/mainnet";
+const MAINNET_RPC_URL: string = "https://mainnet.api.tez.ie";
 const GHOSTNET_RPC_URL: string = "https://ghostnet.tezos.marigold.dev";
 const KATHMANDUNET_RPC_URL: string = "https://rpc.tzkt.io/kathmandunet";
 
@@ -52,9 +52,9 @@ export const DOMAIN_SUFFIX = {
 }[TEZOS_COLLECT_NETWORK.type];
 
 const MARKETPLACE_ADDRESSES = {
-  ghostnet: "KT1L1XzSUgvBHSsJHtWdNa5HVCYnnCHxC2Zj",
+  ghostnet: "KT1NimfkpwDU6avikgin6RG9KZVwRtKiFvAT",
   kathmandunet: "KT1MoWntSgh7c6mVeja7wjNLavRkni4JyNgp",
-  mainnet: "KT1Q4nCfd87KnBWmbgBiBchyysEhavf7qt5i",
+  mainnet: "KT1QAiGD2CS2iwL3LuCc6UFVkdFKV1sXJm36",
   mondaynet: "",
   dailynet: "",
   delphinet: "",

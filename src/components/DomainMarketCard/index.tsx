@@ -52,7 +52,13 @@ const DomainMarketCard = (props: {
           </div>
           <div className="flex">
             {!isRegistered && (
-              <button className="text-tezLightGr p-0">Register</button>
+              <a
+                className="text-tezLightGr p-0"
+                href={`https://app.tezos.domains/domain/${name}.tez`}
+                target="_blank"
+              >
+                Register
+              </a>
             )}
             {(isForAuction || isForSale) && (
               <span className="text-tezLightGr flex items-center">

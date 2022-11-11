@@ -8,12 +8,15 @@ import {
 
 // Set the network (Mainnet is default)
 export const TEZOS_COLLECT_NETWORK: Network = {
-  type: NetworkType.MAINNET,
+  type:
+    process.env.NODE_ENV === "development"
+      ? NetworkType.GHOSTNET
+      : NetworkType.MAINNET,
 };
 
 export const NFT_STORAGE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEZlOTRmMzBFRDQzMzkwQUVkMDBGQTNCY2E3NzY3Nzg2NjhiMDA3ZGQiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MTM3MDI4MjE5MSwibmFtZSI6IkVya2tpIFBhcHVuZW4ifQ.W3e0ulvqTpj3lxnph-dBi8fL5Ja3mM9pI7jzd0LwT_k";
-
+export const CONVALENT_KEY = "ckey_09503fb8f80d43a1b46a5b9da34";
 export const TEZOS_COLLECT_SECRET = "TEZOS_COLLECT_SECRET";
 
 const MAINNET_RPC_URL: string = "https://mainnet.api.tez.ie";
@@ -66,10 +69,43 @@ const MARKETPLACE_ADDRESSES = {
   jakartanet: "",
   custom: "",
 };
+
+const VAULT_ADDRESSES = {
+  ghostnet: "KT1NCMAbF1TNBnKKUQFgjPpjA7pXK27Dc2Gq",
+  kathmandunet: "KT1MoWntSgh7c6mVeja7wjNLavRkni4JyNgp",
+  mainnet: "KT1QxvJdCBetaivDz4kaRoCekaf9Srjgn8KD",
+  mondaynet: "",
+  dailynet: "",
+  delphinet: "",
+  edonet: "",
+  florencenet: "",
+  granadanet: "",
+  hangzhounet: "",
+  ithacanet: "",
+  jakartanet: "",
+  custom: "",
+};
+
 const NAME_REGISTRY_ADDRESSES = {
   ghostnet: "KT1REqKBXwULnmU6RpZxnRBUgcBmESnXhCWs",
   kathmandunet: "KT1EAhRiHGUreBfbz7AC3881h5Fr9wrBoPzY",
   mainnet: "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS",
+  mondaynet: "",
+  dailynet: "",
+  delphinet: "",
+  edonet: "",
+  florencenet: "",
+  granadanet: "",
+  hangzhounet: "",
+  ithacanet: "",
+  jakartanet: "",
+  custom: "",
+};
+
+const TEZOS_DOMAIN_MARKET_ADDRESSES = {
+  ghostnet: "KT1HavuWyozSXPzbmyUUpU6L92jagMQD28DT",
+  kathmandunet: "KT1EAhRiHGUreBfbz7AC3881h5Fr9wrBoPzY",
+  mainnet: "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM",
   mondaynet: "",
   dailynet: "",
   delphinet: "",
@@ -87,6 +123,11 @@ export const MARKETPLACE_CONTRACT_ADDRESS =
 
 export const NAME_REGISTRY_CONTRACT_ADDRESS =
   NAME_REGISTRY_ADDRESSES[TEZOS_COLLECT_NETWORK.type];
+
+export const VAULT_ADDRESS = VAULT_ADDRESSES[TEZOS_COLLECT_NETWORK.type];
+
+export const TEZOSDOMAINS_MARKET_CONTRACT_ADDRESS =
+  TEZOS_DOMAIN_MARKET_ADDRESSES[TEZOS_COLLECT_NETWORK.type];
 
 export const API_ENDPOINT =
   process.env.NODE_ENV === "development"

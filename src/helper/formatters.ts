@@ -63,3 +63,20 @@ export const timerDifFromNow = (_date: Date | string): string => {
 
   return `${dayStr}d  ${hourStr} : ${minStr} : ${secStr}`;
 };
+
+export const toInteger = (value: number | string | undefined | boolean) => {
+  if (typeof value === "boolean") return value ? 1 : 0;
+  return parseInt(value?.toString() || "0");
+};
+
+export const toFloat = (value: string | undefined | number) => {
+  return parseFloat(value?.toString() || "0");
+};
+
+export const beautifyDecimals = (value: undefined | string | number) => {
+  let number = toFloat(value);
+
+  if (number > 60) return toInteger(number);
+  if (number > 1) return toFloat(number.toFixed(2));
+  return toFloat(number.toFixed(3));
+};

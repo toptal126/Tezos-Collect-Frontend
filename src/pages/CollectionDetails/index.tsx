@@ -1,6 +1,7 @@
 import CollectionRoutes from "components/CollectionRoutes";
 import LinkWithSearchParams from "components/LinkWithSearchParams";
 import PercentageChangeTag from "components/UI/PercentageChangeTag";
+import { beautifyDecimals } from "helper/formatters";
 import { TYPE_COLLECTION } from "helper/interfaces";
 import { useMemo } from "react";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
@@ -62,44 +63,50 @@ const CollectionDetails = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-6 gap-8">
+      <div className="grid grid-cols:2 md:grid-cols-6 gap-8">
         <div className="flex flex-col">
-          <div className="size-3 flex items-center gap-2">
-            {collection?.floorPrice.toFixed(2)} ꜩ
+          <div className="whitespace-nowrap size-1 md:size-3 flex items-center gap-2">
+            {beautifyDecimals(collection?.floorPrice)} ꜩ
             <PercentageChangeTag value={collection?.floorPriceChange} />
           </div>
           <span className="text-grayText">Floor</span>
         </div>
         <div className="flex flex-col">
-          <div className="size-3">{collection?.topSale.toFixed(2)} ꜩ</div>
+          <div className="whitespace-nowrap size-1 md:size-3">
+            {beautifyDecimals(collection?.topSale)} ꜩ
+          </div>
           <span className="text-grayText">Top Sale</span>
         </div>
         <div className="flex flex-col">
-          <div className="size-3">{collection?.numberOfOwners}</div>
+          <div className="whitespace-nowrap size-1 md:size-3">
+            {collection?.numberOfOwners}
+          </div>
           <span className="text-grayText">Owners</span>
         </div>
         <div className="flex flex-col col-span-3">
-          <div className="size-3">
+          <div className="whitespace-nowrap size-1 md:size-3">
             {collection?.numberOfMinted}/{collection?.numberOfItems}
           </div>
           <span className="text-grayText">Items</span>
         </div>
         <div className="flex flex-col">
-          <div className="size-3 flex items-center gap-2">
-            {collection?.volumeDay.toFixed(2)} ꜩ
+          <div className="whitespace-nowrap size-1 md:size-3 flex items-center gap-2">
+            {beautifyDecimals(collection?.volumeDay)} ꜩ
             <PercentageChangeTag value={collection?.volumeDayChange} />
           </div>
           <span className="text-grayText">24h Volume</span>
         </div>
         <div className="flex flex-col">
-          <div className="size-3 flex items-center gap-2">
-            {collection?.volumeMonth.toFixed(2)} ꜩ
+          <div className="whitespace-nowrap size-1 md:size-3 flex items-center gap-2">
+            {beautifyDecimals(collection?.volumeMonth)} ꜩ
             <PercentageChangeTag value={collection?.volumeMonthChange} />
           </div>
           <span className="text-grayText">1 Month Volume</span>
         </div>
         <div className="flex flex-col">
-          <div className="size-3">{collection?.totalVolume.toFixed(2)} ꜩ</div>
+          <div className="whitespace-nowrap size-1 md:size-3">
+            {beautifyDecimals(collection?.totalVolume)} ꜩ
+          </div>
           <span className="text-grayText">Total Volume</span>
         </div>
       </div>

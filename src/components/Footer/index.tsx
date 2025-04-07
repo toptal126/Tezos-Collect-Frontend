@@ -27,7 +27,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex items-center justify-between transition-all duration-150">
-        <span>© 2022 Tezos Collect. All rights reserved.</span>
+        <span>© 2025 TezosCollect . All rights reserved.</span>
         <div className="ml-auto flex">
           {pageLinks.map((item, index) =>
             item.external ? (
